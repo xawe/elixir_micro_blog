@@ -1,21 +1,12 @@
 # BlogWriterApi
 
-**TODO: Add description**
 
-## Installation
+## Definição
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `blog_writer_api` to your list of dependencies in `mix.exs`:
+Implementação de api para escrita only.
 
-```elixir
-def deps do
-  [
-    {:blog_writer_api, "~> 0.1.0"}
-  ]
-end
-```
+##Roadmap
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/blog_writer_api>.
+**TODO**
+
 
