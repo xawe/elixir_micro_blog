@@ -24,3 +24,20 @@ blog_writer_api-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+
+vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+© 2022 GitHub, Inc.
+Terms
+Privacy

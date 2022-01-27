@@ -8,6 +8,8 @@ defmodule Routes.ApiRouter do
   end
 
   post "/" do
+    IO.puts("OK ----- ")
+    IO.inspect(conn.body_params)
     send(conn, :ok, %{"id" => 3, "title" => "just been added"})
   end
 
@@ -18,5 +20,8 @@ defmodule Routes.ApiRouter do
   delete "/:id" do
     send(conn, :ok, %{"id" => id, "title" => "Just been deleted"})
   end
+
+  #forward "/movies", to: Routes.MovieRouter
+  forward "/blog", to: Routes.BlogRouter
 
 end
