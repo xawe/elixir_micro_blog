@@ -11,4 +11,9 @@ defmodule HashTest do
     assert r == 1277209514209587487462553690522780865937379794683
   end
 
+  test "Murmur Hash 128 test" do
+    r = Security.Hash.get_hash_mur("Alam Martins")
+    assert r == 325079386751010899307083330019714262487
+  end
+
 end
