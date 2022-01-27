@@ -24,6 +24,7 @@ defmodule BlogWriterApi.MixProject do
     [
       {:plug_cowboy, "~> 2.5"},
       {:jason, "~> 1.3"},
+      {:murmur, "~> 1.0"},
     ]
   end
 end
