@@ -11,7 +11,10 @@ defmodule App.Application do
     children = [
       # Starts a worker by calling: App.Worker.start_link(arg)
       # {App.Worker, arg}
-      {Plug.Cowboy, scheme: :http, plug: Router, options: [port: port()]}
+      {Plug.Cowboy, scheme: :http, plug: Router, options: [port: port()]},
+      %{id: Data.CacheServer,
+       start: {Data.CacheServer, :start_link, ["none"]}
+      }
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
