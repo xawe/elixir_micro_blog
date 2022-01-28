@@ -4,7 +4,7 @@ defmodule Routes.BlogRouter do
 
   post "/create" do
     body = conn.body_params
-
+    Service.Flow.handle_create_request(body)
     send(conn, :ok, conn.body_params)
   end
 
