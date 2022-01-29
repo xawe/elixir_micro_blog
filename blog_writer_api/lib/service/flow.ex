@@ -1,5 +1,4 @@
 defmodule Service.Flow do
-
   @cache_key "input_cache_key"
 
   def handle_create_request(body) do

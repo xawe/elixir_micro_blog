@@ -9,7 +9,6 @@ defmodule Data.CacheServer do
     {:ok, state}
   end
 
-
   def handle_call({:sadd, {key, value}}, _from, _) do
     {:ok, conn} = get_conn()
     result = Redix.command(conn, ["SADD", key, value])
@@ -24,7 +23,6 @@ defmodule Data.CacheServer do
     {:reply, result, []}
   end
 
-
   @spec sadd(any, any) :: any
   def sadd(key, value) do
     GenServer.call(__MODULE__, {:sadd, {key, value}})
@@ -34,9 +32,7 @@ defmodule Data.CacheServer do
     GenServer.call(__MODULE__, {:sismember, {key, value}})
   end
 
-
   defp get_conn() do
     Redix.start_link(Service.Property.get_app_prop(:redis_host), name: :redix)
   end
-
 end
