@@ -7,6 +7,7 @@ defmodule Data.Cache do
 
   def set(key, value) do
     Data.CacheServer.sadd(key, value)
+    |> exists()
   end
 
   def exists_set(key, value) do
@@ -14,6 +15,6 @@ defmodule Data.Cache do
     |> exists()
   end
 
-  defp exists(1), do: :ok
-  defp exists(0), do: :none
+  defp exists({_, 1}), do: :ok
+  defp exists({_, 0}), do: :none
 end
