@@ -8,5 +8,4 @@ defmodule Data.CacheServer do
   def init(state) do
     {:ok, state}
   end
-
 end
