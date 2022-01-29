@@ -21,7 +21,6 @@ defmodule Routes.ApiRouter do
     send(conn, :ok, %{"id" => id, "title" => "Just been deleted"})
   end
 
-  #forward "/movies", to: Routes.MovieRouter
-  forward "/blog", to: Routes.BlogRouter
-
+  # forward "/movies", to: Routes.MovieRouter
+  forward("/blog", to: Routes.BlogRouter)
 end

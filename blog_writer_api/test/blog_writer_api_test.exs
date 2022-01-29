@@ -4,6 +4,5 @@ defmodule BlogWriterApiTest do
 
   test "greets the world" do
     assert BlogWriterApi.hello() == :world
-
   end
 end
