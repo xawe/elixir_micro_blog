@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  red-cache:
+    container_name: red-cache
+    image: redis
+    #command: redis-server --requirepass SUASENHA --appendonly yes
+    command: redis-server --appendonly yes
+    hostname: red-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - /home/xawe/Redis:/var/lib/postgresql/data
+    networks:
+      - micro-net
+
+networks:   
+  micro-net:
+    name: micro-space-network
+    driver: bridge
