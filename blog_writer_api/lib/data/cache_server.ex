@@ -1,5 +1,6 @@
 defmodule Data.CacheServer do
   use GenServer
+  require Logger
 
   def start_link(_) do
     GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
@@ -33,6 +34,8 @@ defmodule Data.CacheServer do
   end
 
   defp get_conn() do
-    Redix.start_link(Service.Property.get_app_prop(:redis_host), name: :redix)
+    url = Service.Property.get_app_prop(:redis_host)
+    Logger.info("Connecting #{url}")
+    Redix.start_link(url, name: :redix)
   end
 end

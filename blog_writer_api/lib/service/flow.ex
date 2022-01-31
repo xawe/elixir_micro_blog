@@ -5,7 +5,7 @@ defmodule Service.Flow do
     hash = Security.Hash.get_hash_mur(body)
     IO.puts("HASH >> #{hash}")
     exists = Data.Cache.set(@cache_key, hash)
-    IO.inspect(exists)
+    IO.puts("Hash exists? >> #{exists}")
     exists
   end
 end
