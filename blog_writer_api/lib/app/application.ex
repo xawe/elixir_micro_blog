@@ -12,7 +12,8 @@ defmodule App.Application do
       # Starts a worker by calling: App.Worker.start_link(arg)
       # {App.Worker, arg}
       {Plug.Cowboy, scheme: :http, plug: Router, options: [port: port()]},
-      {Redix, name: :redix_conn},
+      #{Message.MessageServer, name: :message_server},
+      {Redix, host: Service.Property.get_app_prop(:redis_host), port: Service.Property.get_app_prop(:redis_port) , name: :redix_conn},
       %{id: Data.CacheServer, start: {Data.CacheServer, :start_link, ["none"]}}
     ]
 
@@ -20,6 +21,8 @@ defmodule App.Application do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: App.Supervisor]
 
+    IO.puts(Service.Property.get_app_prop(:redis_host))
+    IO.puts("------------")
     Logger.info("The server listening at port: #{port()}")
     Supervisor.start_link(children, opts)
   end
