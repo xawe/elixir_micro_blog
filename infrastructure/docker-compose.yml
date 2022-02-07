@@ -1,0 +1,32 @@
+version: '3.5'
+
+services:
+  red-cache:
+    container_name: red-cache
+    image: redis
+    #command: redis-server --requirepass SUASENHA --appendonly yes
+    command: redis-server --appendonly yes
+    hostname: red-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - /home/xawe/Redis:/var/lib/postgresql/data
+    networks:
+      - micro-net
+
+  red-rabbit:
+    container_name: red-rabbit
+    image: rabbitmq:3-management-alpine
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:$HOME/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:$HOME/var/log/rabbitmq
+    networks:
+        - micro-net
+
+networks:   
+  micro-net:
+    name: micro-space-network
+    driver: bridge

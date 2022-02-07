@@ -12,6 +12,8 @@ defmodule App.Application do
       # Starts a worker by calling: App.Worker.start_link(arg)
       # {App.Worker, arg}
       {Plug.Cowboy, scheme: :http, plug: Router, options: [port: port()]},
+      #{Message.MessageServer, name: :message_server},
+      {Redix, host: Service.CacheProperty.host, port: Service.CacheProperty.port , name: :redix_conn},
       %{id: Data.CacheServer, start: {Data.CacheServer, :start_link, ["none"]}}
     ]
 
