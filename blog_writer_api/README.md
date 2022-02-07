@@ -19,7 +19,7 @@ Implementação de api para escrita only.
 
     * Para rodar usando debug, será necessário mudar o ip do arquivo de property, indicando o ip do container Redis - 
         
-     > docker inspect red-cache
+      > docker inspect red-cache
 
     * Ou para construir uma imagem e 
         rodar a aplicação dentro de um container, usando a network `micro-space-network` utilizada 
