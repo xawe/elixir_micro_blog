@@ -13,15 +13,23 @@ Implementação de api para escrita only.
 
     - Redis
     
-        * Subir a infraestrutura via arquivo /infrastructure/docker-compose
+        * Subir a infraestrutura via arquivo /infrastructure/docker-compose               
 
-          `docker-compose up -d`
+         `docker-compose up -d`
 
-        * Para rodar usando debug, será necessário mudar o ip do arquivo de property, indicando o ip do container Redis - `docker inspect red-cache`
+        * Para rodar usando debug, será necessário mudar o ip do arquivo de property, indicando o ip do container Redis - 
+        
+         `docker inspect red-cache`
 
-        * Ou usar `MIX_ENV=dev iex -S mix` ou `MIX_ENV=prod iex -S mix` para construir uma imagem e 
+        * Ou para construir uma imagem e 
         rodar a aplicação dentro de um container, usando a network `micro-space-network` utilizada 
-        pela infraestrutura
+        pela infraestrutura, execuar
+
+         `MIX_ENV=dev iex -S mix`
+
+         `MIX_ENV=prod iex -S mix`
+
+         ` docker image build -t xawe/blog-writer-api . `
 
 ## Docker
 
