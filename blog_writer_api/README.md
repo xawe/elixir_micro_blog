@@ -17,6 +17,8 @@ Implementação de api para escrita only.
 
       > docker-compose up -d
 
+  - Subindo a aplicação
+
     * Para rodar usando debug, será necessário mudar o ip do arquivo de property, indicando o ip do container Redis - 
         
       > docker inspect red-cache
