@@ -19,7 +19,9 @@ Implementação de api para escrita only.
 
         * Para rodar usando debug, será necessário mudar o ip do arquivo de property, indicando o ip do container Redis - `docker inspect red-cache`
 
-        * Ou usar `MIX_ENV=dev iex -S mix` ou `MIX_ENV=prod iex -S mix` para construir uma imagem e rodar a aplicação dentro de um container, usando a network `micro-space-network` utiliada pela infraestrutura
+        * Ou usar `MIX_ENV=dev iex -S mix` ou `MIX_ENV=prod iex -S mix` para construir uma imagem e 
+        rodar a aplicação dentro de um container, usando a network `micro-space-network` utilizada 
+        pela infraestrutura
 
 ## Docker
 
