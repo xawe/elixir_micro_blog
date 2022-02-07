@@ -13,7 +13,9 @@ Implementação de api para escrita only.
 
     - Redis
     
-        * Executar o `docker-compose up -d` no arquivo /infrastructure/docker-compose
+        * Subir a infraestrutura via arquivo /infrastructure/docker-compose
+
+          `docker-compose up -d`
 
         * Para rodar usando debug, será necessário mudar o ip do arquivo de property, indicando o ip do container Redis - `docker inspect red-cache`
 
