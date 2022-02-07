@@ -11,8 +11,10 @@ Implementação de api para escrita only.
 
 ## Dependências
 
-  - Redis
-    
+  - Redis    
+
+## Docker
+
     * Subir a infraestrutura via arquivo /infrastructure/docker-compose               
 
       > docker-compose up -d
