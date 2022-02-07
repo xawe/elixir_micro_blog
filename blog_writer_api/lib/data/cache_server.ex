@@ -28,5 +28,4 @@ defmodule Data.CacheServer do
   def sismember({key, value}) do
     GenServer.call(__MODULE__, {:sismember, {key, value}})
   end
-
 end
