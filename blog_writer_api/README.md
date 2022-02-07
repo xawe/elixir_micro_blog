@@ -7,16 +7,19 @@ Implementação de api para escrita only.
 
 
 
-## Infra
+# Infra
 
-# Dependências
+## Dependências
 
  - Redis
     
-    * Executar o `docker-compose up -d` no arquivo /infrastructure/docker-compose
+<p>* Executar o `docker-compose up -d` no arquivo /infrastructure/docker-compose</p>
 
-    * Para rodar usando debug, será necessário mudar o ip do arquivo de property, indicando o ip do container Redis - `docker inspect red-cache`
+<p>* Para rodar usando debug, será necessário mudar o ip do arquivo de property, indicando o ip do container Redis - `docker inspect red-cache`</p>
 
-    * Ou usar `MIX_ENV=dev iex -S mix` ou `MIX_ENV=prod iex -S mix` para construir uma imagem e rodar a aplicação dentro de um container, usando a network `micro-space-network` utiliada pela infraestrutura 
+<p>* Ou usar `MIX_ENV=dev iex -S mix` ou `MIX_ENV=prod iex -S mix` para construir uma imagem e rodar a aplicação dentro de um container, usando a network `micro-space-network` utiliada pela infraestrutura </p>
+
+## Docker
+
 
 
