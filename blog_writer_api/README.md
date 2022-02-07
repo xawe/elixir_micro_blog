@@ -25,9 +25,11 @@ Implementação de api para escrita only.
         rodar a aplicação dentro de um container, usando a network `micro-space-network` utilizada 
         pela infraestrutura, execuar
 
-      > MIX_ENV=dev iex -S mix
+      > MIX_ENV=dev
+    
+    ou
 
-      > MIX_ENV=prod iex -S mix
+      > MIX_ENV=prod
 
       > docker image build -t xawe/blog-writer-api .
 
