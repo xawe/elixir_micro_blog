@@ -26,8 +26,6 @@ Implementação de api para escrita only.
         pela infraestrutura, execuar
 
       > MIX_ENV=dev
-    
-    ou
 
       > MIX_ENV=prod
 
