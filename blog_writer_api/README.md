@@ -31,12 +31,6 @@ Implementação de api para escrita only.
 
       > docker image build -t xawe/blog-writer-api .
 
-## Docker
-
-  - Utilize o comando abaixo para gerar uma nova imagem
-    
-    > docker image build -t xawe/blog-writer-api .
-
-    > Utilize o comando abaixo para gerar um novo container
-
-    > docker container run -dp 8000:8000 --network micro-space-network --network-alias blog-writer-api --name blog-writer xawe/blog-writer-api 
+    * e para criar um novo container
+      
+      > docker container run -dp 8000:8000 --network micro-space-network --network-alias blog-writer-api --name blog-writer xawe/blog-writer-api 
