@@ -10,7 +10,9 @@ config :amqp,
     myconn: [url: "amqp://guest:guest@172.24.0.3:5672"],
   ],
   channels: [
-    mychan: [connection: :myconn]
+    mychan: [
+      connection: :myconn,
+    ]
   ]
 
 import_config "#{Mix.env()}.exs"
