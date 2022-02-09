@@ -1,6 +1,7 @@
 defmodule Message.Publisher do
   use GenServer
   require Logger
+  alias Service.MessageProperty
 
   def start_link(_) do
     GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
@@ -17,7 +18,8 @@ defmodule Message.Publisher do
   end
 
   defp build_msg_infra(channel) do
-    AMQP.Exchange.declare(channel, "post_data", :fanout)
-    AMQP.Queue.declare(channel, "post_data_queue", [:durable])
+    AMQP.Exchange.declare(channel, MessageProperty.exchange, :fanout)
+    AMQP.Queue.declare(channel, MessageProperty.queue, [:durable])
+    AMQP.Queue.declare(channel, MessageProperty.error_queue, [:durable])
   end
 end
