@@ -9,7 +9,26 @@ defmodule Message.Publisher do
 
   def init(_) do
     {_, channel} = start_conn()
+    build(channel)
     {:ok, channel}
+  end
+
+  def handle_call({:send, msg}, _from, channel) do
+    result = AMQP.Basic.publish(channel, MessageProperty.exchange, "", msg)
+    {:reply, result, channel}
+  end
+
+  def handle_cast({:send_async, msg},  channel) do
+    AMQP.Basic.publish(channel, MessageProperty.exchange, "", msg)
+    {:noreply, channel}
+  end
+
+  def send(msg) do
+    GenServer.call(__MODULE__, {:send, msg})
+  end
+
+  def send_async(msg) do
+    GenServer.cast(__MODULE__, {:send_async, msg})
   end
 
   defp start_conn() do
@@ -17,9 +36,10 @@ defmodule Message.Publisher do
     AMQP.Application.get_channel(:msg_channel)
   end
 
-  defp build_msg_infra(channel) do
-    AMQP.Exchange.declare(channel, MessageProperty.exchange, :fanout)
-    AMQP.Queue.declare(channel, MessageProperty.queue, [:durable])
-    AMQP.Queue.declare(channel, MessageProperty.error_queue, [:durable])
+  defp build(channel) do
+    AMQP.Exchange.declare(channel, MessageProperty.exchange(), :fanout)
+    AMQP.Queue.declare(channel, MessageProperty.queue())
+    AMQP.Queue.bind(channel, MessageProperty.queue(), MessageProperty.exchange())
+    {:ok}
   end
 end
