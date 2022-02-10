@@ -3,15 +3,18 @@ import Config
 config :app,
   # redis_host: "redis://172.24.0.2:6379"
   redis_host: "172.24.0.2",
-  redis_port: 6379
+  redis_port: 6379,
+  exchange: "post_data_ex",
+  queue: "post_data_ok",
+  error_queue: "post_data_error"
 
 config :amqp,
   connections: [
-    myconn: [url: "amqp://guest:guest@172.24.0.3:5672"],
+    msg_conn: [url: "amqp://guest:guest@172.24.0.3:5672"],
   ],
   channels: [
-    mychan: [
-      connection: :myconn,
+    msg_channel: [
+      connection: :msg_conn,
     ]
   ]
 

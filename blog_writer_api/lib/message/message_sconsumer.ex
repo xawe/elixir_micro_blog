@@ -1,4 +1,4 @@
-defmodule Message.MessageServer do
+defmodule Message.MessageConsumer do
   use GenServer
   use AMQP
   require Logger

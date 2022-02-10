@@ -13,6 +13,7 @@ defmodule App.Application do
       # {App.Worker, arg}
       {Plug.Cowboy, scheme: :http, plug: Router, options: [port: port()]},
       # {Message.MessageServer, name: :message_server},
+      {Message.Publisher, name: :publisher_server},
       {Redix,
        host: Service.CacheProperty.host(), port: Service.CacheProperty.port(), name: :redix_conn},
       %{id: Data.CacheServer, start: {Data.CacheServer, :start_link, ["none"]}}
