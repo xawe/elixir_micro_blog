@@ -6,7 +6,6 @@ defmodule Service.Flow do
     |> Data.Cache.set(Security.Hash.get_hash_mur(payload))
     |> persist_data(payload)
 
-    # IO.puts("Hash created? >> #{exists}")
     {:ok, payload}
   end
 
