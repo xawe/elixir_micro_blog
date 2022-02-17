@@ -27,7 +27,7 @@ defmodule Service.Flow do
   end
 
   defp persist_data(status, _) do
-    IO.puts("Breaking chain --- #{status}")
+    IO.puts("Breaking chain --- Status >>  #{status}")
     :error
   end
 end
