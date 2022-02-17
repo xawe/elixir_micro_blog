@@ -26,7 +26,8 @@ defmodule BlogWriterApi.MixProject do
       {:jason, "~> 1.3"},
       {:murmur, "~> 1.0"},
       {:redix, "~> 1.1"},
-      {:amqp, "~> 3.0"}
+      {:amqp, "~> 3.0"},
+      {:uuid, "~> 1.1.8"}
     ]
   end
 end
