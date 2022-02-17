@@ -1,5 +1,4 @@
 defmodule Service.MessageProperty do
-
   @doc """
   Retorna o nome da exchange
   """
