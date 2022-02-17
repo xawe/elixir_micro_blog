@@ -10,11 +10,11 @@ config :app,
 
 config :amqp,
   connections: [
-    msg_conn: [url: "amqp://guest:guest@172.24.0.3:5672"],
+    msg_conn: [url: "amqp://guest:guest@172.24.0.3:5672"]
   ],
   channels: [
     msg_channel: [
-      connection: :msg_conn,
+      connection: :msg_conn
     ]
   ]
 
