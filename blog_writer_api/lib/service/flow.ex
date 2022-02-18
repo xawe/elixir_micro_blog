@@ -2,6 +2,18 @@ defmodule Service.Flow do
   alias Service.CacheProperty
   require Logger
 
+  @moduledoc """
+  Modulo responsável por orquestrar o envio de mensagem
+
+    1 - criação do hash da mensagem    
+    2 - enviar hash para o cache
+    3 - Caso a mensagem não exista no cache, ela seguirá para a exchange para propagação da informação
+
+  """
+
+  @doc """
+    função responsável por determinar o fluxo da mensagem recebida         
+  """
   def handle_create_request({:ok, payload}) do
     hash = Security.Hash.get_hash_mur(payload)
     created = Data.Cache.set(CacheProperty.cache_key(), hash)
