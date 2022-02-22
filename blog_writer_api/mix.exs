@@ -27,7 +27,9 @@ defmodule BlogWriterApi.MixProject do
       {:murmur, "~> 1.0"},
       {:redix, "~> 1.1"},
       {:amqp, "~> 3.0"},
-      {:uuid, "~> 1.1.8"}
+      {:uuid, "~> 1.1.8"},
+      {:ecto_sql, "~> 3.7"},
+      {:postgrex, "~> 0.16.1"}
     ]
   end
 end
