@@ -1,5 +1,5 @@
 defmodule App.Repo do
   use Ecto.Repo,
-    otp_app: :friends,
+    otp_app: :app,
     adapter: Ecto.Adapters.Postgres
 end
