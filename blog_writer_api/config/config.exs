@@ -2,7 +2,7 @@ import Config
 
 config :app,
   # redis_host: "redis://172.24.0.2:6379"
-  redis_host: "172.24.0.2",
+  redis_host: "localhost",
   redis_port: 6379,
   exchange: "post_data_ex",
   queue: "post_data_ok",
@@ -10,7 +10,7 @@ config :app,
 
 config :amqp,
   connections: [
-    msg_conn: [url: "amqp://guest:guest@172.24.0.3:5672"]
+    msg_conn: [url: "amqp://guest:guest@localhost:5672"]
   ],
   channels: [
     msg_channel: [

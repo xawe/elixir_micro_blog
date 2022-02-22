@@ -3,20 +3,13 @@ defmodule App.Application do
   # for more information on OTP Applications
   @moduledoc false
 
-  use Application
+ # use Application
 
   require Logger
 
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: App.Worker.start_link(arg)
-      # {App.Worker, arg}
-      # {Plug.Cowboy, scheme: :http, plug: Router, options: [port: port()]},
-      # {Message.MessageServer, name: :message_server},
-      # {Message.Publisher, name: :publisher_server},
-      # {Redix,
-      # host: Service.CacheProperty.host(), port: Service.CacheProperty.port(), name: :redix_conn},
-      # %{id: Data.CacheServer, start: {Data.CacheServer, :start_link, ["none"]}}
+      App.Repo,
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
