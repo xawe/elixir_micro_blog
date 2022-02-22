@@ -11,7 +11,8 @@ Implementação de api para escrita only.
 
 ## Dependências
 
-  - Redis    
+  - Redis
+  - RabbitMQ    
 
 ## Docker
 
