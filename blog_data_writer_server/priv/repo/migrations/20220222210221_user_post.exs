@@ -2,7 +2,7 @@ defmodule App.Repo.Migrations.UserPost do
   use Ecto.Migration
 
   def change do
-    create table(:posts) do
+    create table(:post) do
       add :message, :string, null: false
       add :user, :string, null: false
       add :referenceid, :string, null: false
