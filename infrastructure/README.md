@@ -3,7 +3,8 @@
 ## Dependências
 
   - Redis  
-  - RabbitMQ     
+  - RabbitMQ
+    User: guest >> Password: guest 
   - Postgresql
   - PgAdmin
 
