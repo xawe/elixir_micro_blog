@@ -38,6 +38,7 @@ defmodule Message.Consumer do
     {:noreply, chan}
   end
 
+  #não utilizado.
   defp setup_queue(chan) do
     IO.inspect("------------")
     IO.inspect(Service.MessageProperty.error_queue())
@@ -58,24 +59,22 @@ defmodule Message.Consumer do
   end
 
   defp consume(channel, tag, redelivered, payload) do
-    {id, created_on, fingerprint, message} = payload
-    IO.inspect(id)
-    IO.inspect(created_on)
-    IO.inspect(fingerprint)
-    IO.inspect(message)
-    # number = String.to_integer(payload)
+    {:ok, message } = payload
+      |> Jason.decode
 
-    # if number <= 10 do
-    #   :ok = Basic.ack(channel, tag)
-    #   IO.puts("Consumed a #{number}.")
-    # else
-    #   :ok = Basic.reject(channel, tag, requeue: false)
-    #   IO.puts("#{number} is too big and was rejected.")
-    # end
+    IO.inspect(Map.get(message, "fingerprint"))
+    IO.inspect(Map.get(message, "created_on"))
+    IO.inspect(Map.get(message, "id"))
+    IO.inspect(Map.get(message, "message"))
+    IO.puts("----------------")
+    message_content = Map.get(message, "message")
+    IO.puts(Map.get(message_content, "message"))
+    IO.puts(Map.get(message_content, "user"))
+
+
   rescue
     exception ->
       #:ok = Basic.reject(channel, tag, requeue: not redelivered)
-      IO.puts("Error converting #{payload} to integer")
       IO.inspect(Exception.format(:error, exception, __STACKTRACE__))
   end
 end
