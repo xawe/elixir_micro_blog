@@ -1,5 +1,11 @@
 import Config
 
+config :app,
+  exchange: "persist_data_ex",
+  queue_in: "post_data_ok",
+  queue: "persist_data_ok",
+  error_queue: "persist_data_error"
+
 config :app, App.Repo,
   database: "blog_data_writer_local",
   username: "postgres",

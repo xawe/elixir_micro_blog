@@ -3,10 +3,10 @@ defmodule App.Post do
   import Ecto.Changeset
 
   schema "post" do
-    field :user, :string
-    field :message, :string
-    field :referenceid, :string
-    field :fingerprint, :integer
+    field(:user, :string)
+    field(:message, :string)
+    field(:referenceid, :string)
+    field(:fingerprint, :integer)
 
     timestamps()
   end
@@ -16,5 +16,4 @@ defmodule App.Post do
     |> cast(params, [:user, :message, :referenceid, :fingerprint])
     |> validate_required([:user, :message, :referenceid, :fingerprint])
   end
-
 end
