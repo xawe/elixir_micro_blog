@@ -37,8 +37,8 @@ defmodule Message.Publisher do
   end
 
   defp build(channel) do
-    AMQP.Exchange.declare(channel, MessageProperty.exchange(), :fanout)
-    AMQP.Queue.declare(channel, MessageProperty.queue())
+    AMQP.Exchange.declare(channel, MessageProperty.exchange(), :fanout, durable: true)
+    AMQP.Queue.declare(channel, MessageProperty.queue(), durable: true)
     AMQP.Queue.bind(channel, MessageProperty.queue(), MessageProperty.exchange())
     {:ok}
   end

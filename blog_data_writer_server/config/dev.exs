@@ -6,4 +6,4 @@ config :app, App.Repo,
   password: "postgres",
   hostname: "localhost"
 
-  config :app, ecto_repos: [App.Repo]
+config :app, ecto_repos: [App.Repo]

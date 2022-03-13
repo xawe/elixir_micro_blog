@@ -3,13 +3,13 @@ defmodule App.Application do
   # for more information on OTP Applications
   @moduledoc false
 
- # use Application
+  # use Application
 
   require Logger
 
   def start(_type, _args) do
     children = [
-      App.Repo,
+      App.Repo
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
