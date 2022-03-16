@@ -61,9 +61,18 @@ defmodule Message.Consumer do
 
   defp consume(channel, tag, redelivered, payload) do
     Service.MessageFlow.process_data(payload)
+      |> clean_message(channel, tag)
   rescue
     exception ->
       # :ok = Basic.reject(channel, tag, requeue: not redelivered)
       IO.inspect(Exception.format(:error, exception, __STACKTRACE__))
+  end
+
+  defp clean_message({:ok, _}, channel, tag) do
+    :ok = AMQP.Basic.ack(channel, tag)
+  end
+
+  defp clean_message({_, _}, channel, tag) do
+    :ok = AMQP.Basic.reject(channel, tag, requeue: false)
   end
 end

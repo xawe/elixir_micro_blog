@@ -9,10 +9,8 @@ defmodule Service.MessageFlow do
       |> App.DataContext.Post.create_post()
 
     id = Map.get(data, :id)
-    IO.puts("|||||")
-    IO.inspect(data)
-
     Logger.info("Dados armazenados com sucesso :: id #{id}")
+    {status, data}
 
   end
 
