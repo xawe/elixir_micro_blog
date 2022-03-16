@@ -6,7 +6,8 @@ config :app,
   redis_port: 6379,
   exchange: "post_data_ex",
   queue: "post_data_ok",
-  error_queue: "post_data_error"
+  error_queue: "post_data_error",
+  cache_status: :off
 
 config :amqp,
   connections: [
