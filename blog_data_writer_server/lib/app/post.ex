@@ -6,7 +6,7 @@ defmodule App.Post do
     field(:user, :string)
     field(:message, :string)
     field(:referenceid, :string)
-    field(:fingerprint, :integer)
+    field(:fingerprint, :string)
 
     timestamps()
   end

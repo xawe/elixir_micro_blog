@@ -14,7 +14,7 @@ defmodule Message.Consumer do
   def init(_opts) do
     {:ok, conn} = Connection.open("amqp://guest:guest@localhost")
     {:ok, chan} = Channel.open(conn)
-    #setup_queue(chan)
+    # setup_queue(chan)
 
     :ok = Basic.qos(chan, prefetch_count: 10)
     {:ok, _consumer_tag} = Basic.consume(chan, Service.MessageProperty.queue_in())
@@ -38,7 +38,7 @@ defmodule Message.Consumer do
     {:noreply, chan}
   end
 
-  #não utilizado.
+  # não utilizado.
   defp setup_queue(chan) do
     IO.inspect("------------")
     IO.inspect(Service.MessageProperty.error_queue())
@@ -52,29 +52,18 @@ defmodule Message.Consumer do
           {"x-dead-letter-routing-key", :longstr, Service.MessageProperty.error_queue()}
         ]
       )
-        IO.inspect("------------")
-        IO.inspect(Service.MessageProperty.exchange())
+
+    IO.inspect("------------")
+    IO.inspect(Service.MessageProperty.exchange())
     :ok = Exchange.fanout(chan, Service.MessageProperty.exchange(), durable: true)
     :ok = Queue.bind(chan, Service.MessageProperty.queue_in(), Service.MessageProperty.exchange())
   end
 
   defp consume(channel, tag, redelivered, payload) do
-    {:ok, message } = payload
-      |> Jason.decode
-
-    IO.inspect(Map.get(message, "fingerprint"))
-    IO.inspect(Map.get(message, "created_on"))
-    IO.inspect(Map.get(message, "id"))
-    IO.inspect(Map.get(message, "message"))
-    IO.puts("----------------")
-    message_content = Map.get(message, "message")
-    IO.puts(Map.get(message_content, "message"))
-    IO.puts(Map.get(message_content, "user"))
-
-
+    Service.MessageFlow.process_data(payload)
   rescue
     exception ->
-      #:ok = Basic.reject(channel, tag, requeue: not redelivered)
+      # :ok = Basic.reject(channel, tag, requeue: not redelivered)
       IO.inspect(Exception.format(:error, exception, __STACKTRACE__))
   end
 end
