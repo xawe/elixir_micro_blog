@@ -3,8 +3,8 @@ defmodule Message.Consumer do
   use AMQP
   require Logger
 
-  def start_link do
-    GenServer.start_link(__MODULE__, [], [])
+  def start_link(process_name) do
+    GenServer.start_link(__MODULE__, {process_name}, name: {:global, "server:#{process_name}"})
   end
 
   # @exchange "gen_server_test_exchange"
@@ -61,18 +61,20 @@ defmodule Message.Consumer do
 
   defp consume(channel, tag, redelivered, payload) do
     Service.MessageFlow.process_data(payload)
-      |> clean_message(channel, tag)
+      |> release_message(channel, tag)
+
+      Logger.info("Message process in #{__MODULE__}")
   rescue
     exception ->
       # :ok = Basic.reject(channel, tag, requeue: not redelivered)
       IO.inspect(Exception.format(:error, exception, __STACKTRACE__))
   end
 
-  defp clean_message({:ok, _}, channel, tag) do
+  defp release_message({:ok, _}, channel, tag) do
     :ok = AMQP.Basic.ack(channel, tag)
   end
 
-  defp clean_message({_, _}, channel, tag) do
+  defp release_message({_, _}, channel, tag) do
     :ok = AMQP.Basic.reject(channel, tag, requeue: false)
   end
 end
