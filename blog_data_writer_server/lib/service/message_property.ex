@@ -23,4 +23,17 @@ defmodule Service.MessageProperty do
   def error_queue() do
     Service.Property.get_app_prop(:error_queue)
   end
+
+  @doc """
+  retorna a quantidade de instancias para o consumidor da fila
+  """
+  def consumer_instance_count() do
+    {v, _} = Service.Property.get_app_prop(:consumer_instance_count)
+    |> Integer.parse
+    v
+  end
+
+  def amqp_connection() do
+    Application.get_env(:amqp, :connections)[:msg_conn][:url]
+  end
 end

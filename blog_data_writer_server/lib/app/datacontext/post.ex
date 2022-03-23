@@ -9,5 +9,4 @@ defmodule App.DataContext.Post do
     |> App.Post.changeset(attrs)
     |> Repo.insert()
   end
-
 end

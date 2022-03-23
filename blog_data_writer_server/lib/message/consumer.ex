@@ -7,12 +7,8 @@ defmodule Message.Consumer do
     GenServer.start_link(__MODULE__, {process_name}, name: {:global, "server:#{process_name}"})
   end
 
-  # @exchange "gen_server_test_exchange"
-  # @queue "gen_server_test_queue"
-  # @queue_error "#{@queue}_error"
-
   def init(_opts) do
-    {:ok, conn} = Connection.open("amqp://guest:guest@localhost")
+    {:ok, conn} = Connection.open(Service.MessageProperty.amqp_connection())
     {:ok, chan} = Channel.open(conn)
     # setup_queue(chan)
 
@@ -38,9 +34,12 @@ defmodule Message.Consumer do
     {:noreply, chan}
   end
 
-  # não utilizado.
+  def count_children() do
+    DynamicSupervisor.count_children()
+  end
+
+  ## não utilizado. falta implementar a postagem da mensagem para a fila de sincronização
   defp setup_queue(chan) do
-    IO.inspect("------------")
     IO.inspect(Service.MessageProperty.error_queue())
     {:ok, _} = Queue.declare(chan, Service.MessageProperty.error_queue(), durable: true)
 

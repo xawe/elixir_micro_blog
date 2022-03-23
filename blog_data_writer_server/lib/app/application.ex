@@ -11,7 +11,7 @@ defmodule App.Application do
     children = [
       App.Repo,
       {Message.MessageSupervisor, name: :message_supervisor}
-      #{Message.Consumer, name: :consumer_server}
+      # {Message.Consumer, name: :consumer_server}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

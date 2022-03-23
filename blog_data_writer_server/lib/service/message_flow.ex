@@ -11,7 +11,6 @@ defmodule Service.MessageFlow do
     id = Map.get(data, :id)
     Logger.info("Dados armazenados com sucesso :: id #{id}")
     {status, data}
-
   end
 
   defp build_message_map({status, message}) do
