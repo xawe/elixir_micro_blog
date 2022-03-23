@@ -3,18 +3,14 @@ defmodule Message.Consumer do
   use AMQP
   require Logger
 
-  def start_link do
-    GenServer.start_link(__MODULE__, [], [])
+  def start_link(process_name) do
+    GenServer.start_link(__MODULE__, {process_name}, name: {:global, "server:#{process_name}"})
   end
 
-  # @exchange "gen_server_test_exchange"
-  # @queue "gen_server_test_queue"
-  # @queue_error "#{@queue}_error"
-
   def init(_opts) do
-    {:ok, conn} = Connection.open("amqp://guest:guest@localhost")
+    {:ok, conn} = Connection.open(Service.MessageProperty.amqp_connection())
     {:ok, chan} = Channel.open(conn)
-    #setup_queue(chan)
+    # setup_queue(chan)
 
     :ok = Basic.qos(chan, prefetch_count: 10)
     {:ok, _consumer_tag} = Basic.consume(chan, Service.MessageProperty.queue_in())
@@ -38,9 +34,12 @@ defmodule Message.Consumer do
     {:noreply, chan}
   end
 
-  #não utilizado.
+  def count_children() do
+    DynamicSupervisor.count_children()
+  end
+
+  ## não utilizado. falta implementar a postagem da mensagem para a fila de sincronização
   defp setup_queue(chan) do
-    IO.inspect("------------")
     IO.inspect(Service.MessageProperty.error_queue())
     {:ok, _} = Queue.declare(chan, Service.MessageProperty.error_queue(), durable: true)
 
@@ -52,29 +51,29 @@ defmodule Message.Consumer do
           {"x-dead-letter-routing-key", :longstr, Service.MessageProperty.error_queue()}
         ]
       )
-        IO.inspect("------------")
-        IO.inspect(Service.MessageProperty.exchange())
+
+    IO.inspect("------------")
+    IO.inspect(Service.MessageProperty.exchange())
     :ok = Exchange.fanout(chan, Service.MessageProperty.exchange(), durable: true)
     :ok = Queue.bind(chan, Service.MessageProperty.queue_in(), Service.MessageProperty.exchange())
   end
 
   defp consume(channel, tag, redelivered, payload) do
-    {:ok, message } = payload
-      |> Jason.decode
+    Service.MessageFlow.process_data(payload)
+      |> release_message(channel, tag)
 
-    IO.inspect(Map.get(message, "fingerprint"))
-    IO.inspect(Map.get(message, "created_on"))
-    IO.inspect(Map.get(message, "id"))
-    IO.inspect(Map.get(message, "message"))
-    IO.puts("----------------")
-    message_content = Map.get(message, "message")
-    IO.puts(Map.get(message_content, "message"))
-    IO.puts(Map.get(message_content, "user"))
-
-
+      Logger.info("Message process in #{__MODULE__}")
   rescue
     exception ->
-      #:ok = Basic.reject(channel, tag, requeue: not redelivered)
+      # :ok = Basic.reject(channel, tag, requeue: not redelivered)
       IO.inspect(Exception.format(:error, exception, __STACKTRACE__))
+  end
+
+  defp release_message({:ok, _}, channel, tag) do
+    :ok = AMQP.Basic.ack(channel, tag)
+  end
+
+  defp release_message({_, _}, channel, tag) do
+    :ok = AMQP.Basic.reject(channel, tag, requeue: false)
   end
 end

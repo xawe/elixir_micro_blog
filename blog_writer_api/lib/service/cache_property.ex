@@ -10,4 +10,8 @@ defmodule Service.CacheProperty do
   def cache_key() do
     "input_cache_key"
   end
+
+  def cache_status() do
+    Service.Property.get_app_prop(:cache_status)
+  end
 end

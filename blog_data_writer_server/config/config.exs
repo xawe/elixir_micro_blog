@@ -4,13 +4,15 @@ config :app,
   exchange: "persist_data_ex",
   queue_in: "post_data_ok",
   queue: "persist_data_ok",
-  error_queue: "persist_data_error"
+  error_queue: "persist_data_error",
+  consumer_instance_count: "20"
 
 config :app, App.Repo,
   database: "blog_data_writer_local",
   username: "postgres",
   password: "postgres",
-  hostname: "localhost"
+  hostname: "localhost",
+  pool_size: 20
 
 config :app, ecto_repos: [App.Repo]
 

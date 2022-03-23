@@ -16,7 +16,8 @@ defmodule Service.Flow do
   """
   def handle_create_request({:ok, payload}) do
     hash = Security.Hash.get_hash_mur(payload)
-    created = Data.Cache.set(CacheProperty.cache_key(), hash)
+    # created = Data.Cache.set(CacheProperty.cache_key(), hash)
+    created = create_cache({Service.CacheProperty.cache_status(), hash})
     send_data({created, hash, payload})
 
     {:ok, payload}
@@ -45,5 +46,13 @@ defmodule Service.Flow do
 
   defp build_message(payload, hash) do
     %{id: UUID.uuid1(), created_on: DateTime.utc_now(), fingerprint: hash, message: payload}
+  end
+
+  defp create_cache({:on, hash}) do
+    Data.Cache.set(CacheProperty.cache_key(), hash)
+  end
+
+  defp create_cache({:off, _}) do
+    :ok
   end
 end
