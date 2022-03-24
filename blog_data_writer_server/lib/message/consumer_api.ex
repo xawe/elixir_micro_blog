@@ -1,4 +1,4 @@
-defmodule Message.Consumer do
+defmodule Message.ConsumerApi do
   use GenServer
   use AMQP
   require Logger
@@ -10,8 +10,6 @@ defmodule Message.Consumer do
   def init(_opts) do
     {:ok, conn} = Connection.open(Service.MessageProperty.amqp_connection())
     {:ok, chan} = Channel.open(conn)
-    # setup_queue(chan)
-
     :ok = Basic.qos(chan, prefetch_count: 10)
     {:ok, _consumer_tag} = Basic.consume(chan, Service.MessageProperty.queue_in())
     {:ok, chan}
@@ -30,7 +28,7 @@ defmodule Message.Consumer do
   end
 
   def handle_info({:basic_deliver, payload, %{delivery_tag: tag, redelivered: redelivered}}, chan) do
-    consume(chan, tag, redelivered, payload)
+    Message.ConsumerImpl.consume(chan, tag, redelivered, payload)
     {:noreply, chan}
   end
 
@@ -58,22 +56,5 @@ defmodule Message.Consumer do
     :ok = Queue.bind(chan, Service.MessageProperty.queue_in(), Service.MessageProperty.exchange())
   end
 
-  defp consume(channel, tag, redelivered, payload) do
-    Service.MessageFlow.process_data(payload)
-      |> release_message(channel, tag)
 
-      Logger.info("Message process in #{__MODULE__}")
-  rescue
-    exception ->
-      # :ok = Basic.reject(channel, tag, requeue: not redelivered)
-      IO.inspect(Exception.format(:error, exception, __STACKTRACE__))
-  end
-
-  defp release_message({:ok, _}, channel, tag) do
-    :ok = AMQP.Basic.ack(channel, tag)
-  end
-
-  defp release_message({_, _}, channel, tag) do
-    :ok = AMQP.Basic.reject(channel, tag, requeue: false)
-  end
 end

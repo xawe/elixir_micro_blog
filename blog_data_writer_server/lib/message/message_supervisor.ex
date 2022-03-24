@@ -22,7 +22,7 @@ defmodule Message.MessageSupervisor do
   end
 
   defp create_process(name) do
-    child_spec = {Message.Consumer, name}
+    child_spec = {Message.ConsumerApi, name}
     DynamicSupervisor.start_child(__MODULE__, child_spec)
   end
 end
