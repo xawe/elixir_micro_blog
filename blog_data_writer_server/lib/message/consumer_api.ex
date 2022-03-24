@@ -55,6 +55,4 @@ defmodule Message.ConsumerApi do
     :ok = Exchange.fanout(chan, Service.MessageProperty.exchange(), durable: true)
     :ok = Queue.bind(chan, Service.MessageProperty.queue_in(), Service.MessageProperty.exchange())
   end
-
-
 end
