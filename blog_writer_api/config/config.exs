@@ -7,7 +7,9 @@ config :app,
   receive_exchange: "receive_exchange",
   confirm_exchange: "confirm_exchange",
   receive_queue: "receive_data_queue",
+  persist_queue: "persist_data_queue",
   error_queue: "post_data_queue_error",
+  persist_queue_error: "persist_data_error",
   cache_status: :off
 
 config :amqp,

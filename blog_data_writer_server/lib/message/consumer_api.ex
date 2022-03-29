@@ -11,7 +11,7 @@ defmodule Message.ConsumerApi do
     {:ok, conn} = Connection.open(Service.MessageProperty.amqp_connection())
     {:ok, chan} = Channel.open(conn)
     :ok = Basic.qos(chan, prefetch_count: 10)
-    {:ok, _consumer_tag} = Basic.consume(chan, Service.MessageProperty.queue_in())
+    {:ok, _consumer_tag} = Basic.consume(chan, Service.MessageProperty.receive_queue())
     {:ok, chan}
   end
 
@@ -37,22 +37,22 @@ defmodule Message.ConsumerApi do
   end
 
   ## não utilizado. falta implementar a postagem da mensagem para a fila de sincronização
-  defp setup_queue(chan) do
-    IO.inspect(Service.MessageProperty.error_queue())
-    {:ok, _} = Queue.declare(chan, Service.MessageProperty.error_queue(), durable: true)
+  # defp setup_queue(chan) do
+  #   IO.inspect(Service.MessageProperty.error_queue())
+  #   {:ok, _} = Queue.declare(chan, Service.MessageProperty.error_queue(), durable: true)
 
-    {:ok, _} =
-      Queue.declare(chan, Service.MessageProperty.queue_in(),
-        durable: true,
-        arguments: [
-          {"x-dead-letter-exchange", :longstr, ""},
-          {"x-dead-letter-routing-key", :longstr, Service.MessageProperty.error_queue()}
-        ]
-      )
+  #   {:ok, _} =
+  #     Queue.declare(chan, Service.MessageProperty.queue_in(),
+  #       durable: true,
+  #       arguments: [
+  #         {"x-dead-letter-exchange", :longstr, ""},
+  #         {"x-dead-letter-routing-key", :longstr, Service.MessageProperty.error_queue()}
+  #       ]
+  #     )
 
-    IO.inspect("------------")
-    IO.inspect(Service.MessageProperty.exchange())
-    :ok = Exchange.fanout(chan, Service.MessageProperty.exchange(), durable: true)
-    :ok = Queue.bind(chan, Service.MessageProperty.queue_in(), Service.MessageProperty.exchange())
-  end
+  #   IO.inspect("------------")
+  #   IO.inspect(Service.MessageProperty.exchange())
+  #   :ok = Exchange.fanout(chan, Service.MessageProperty.exchange(), durable: true)
+  #   :ok = Queue.bind(chan, Service.MessageProperty.queue_in(), Service.MessageProperty.exchange())
+  # end
 end

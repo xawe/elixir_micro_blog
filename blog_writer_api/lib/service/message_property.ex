@@ -21,9 +21,23 @@ defmodule Service.MessageProperty do
   end
 
   @doc """
+  Retorna o nome da fila de persistencia
+  """
+  def persist_queue() do
+    Service.Property.get_app_prop(:persist_queue)
+  end
+
+  @doc """
   retorna o nome da fila de erro
   """
   def error_queue() do
     Service.Property.get_app_prop(:error_queue)
+  end
+
+  @doc """
+  Retorna o nome da fila de erro de persistencia
+  """
+  def persist_queue_error() do
+    Service.Property.get_app_prop(:persist_queue_error)
   end
 end
