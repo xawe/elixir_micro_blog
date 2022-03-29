@@ -12,7 +12,8 @@ defmodule Message.ConsumerImpl do
   """
   def consume(channel, tag, redelivered, payload) do
     IO.inspect(payload)
-    Logger.info("Mensagem processada em #{inspect Map.get(channel, :pid)}")
+    Logger.info("Mensagem processada em #{inspect(Map.get(channel, :pid))}")
+
     Service.MessageFlow.process_data(payload)
     |> ack_message(channel, tag)
   rescue

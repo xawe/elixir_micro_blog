@@ -1,10 +1,12 @@
 import Config
 
 config :app,
-  exchange: "persist_data_ex",
-  queue_in: "post_data_ok",
-  queue: "persist_data_ok",
-  error_queue: "persist_data_error",
+  receive_exchange: "receive_exchange",
+  confirm_exchange: "confirm_exchange",
+  receive_queue: "receive_data_queue",
+  persist_queue: "persist_data_queue",
+  error_queue: "post_data_queue_error",
+  persist_queue_error: "persist_data_error",
   consumer_instance_count: "20"
 
 config :app, App.Repo,
