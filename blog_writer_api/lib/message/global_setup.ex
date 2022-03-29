@@ -29,6 +29,7 @@ defmodule Message.GlobalSetup do
   """
   def queue_setups(channel) do
     AMQP.Queue.declare(channel, Service.MessageProperty.receive_queue(), durable: true)
+    AMQP.Queue.declare(channel, Service.MessageProperty.persist_queue(), durable: true)
   end
 
   @doc """
@@ -39,6 +40,12 @@ defmodule Message.GlobalSetup do
       channel,
       Service.MessageProperty.receive_queue(),
       Service.MessageProperty.receive_exchange()
+    )
+
+    AMQP.Queue.bind(
+      channel,
+      Service.MessageProperty.persist_queue(),
+      Service.MessageProperty.confirm_exchange()
     )
   end
 end
