@@ -14,12 +14,12 @@ defmodule Message.Publisher do
   end
 
   def handle_call({:send, msg}, _from, channel) do
-    result = AMQP.Basic.publish(channel, MessageProperty.exchange(), "", msg)
+    result = AMQP.Basic.publish(channel, MessageProperty.receive_exchange(), "", msg)
     {:reply, result, channel}
   end
 
   def handle_cast({:send_async, msg}, channel) do
-    AMQP.Basic.publish(channel, MessageProperty.exchange(), "", msg)
+    AMQP.Basic.publish(channel, MessageProperty.receive_exchange(), "", msg)
     {:noreply, channel}
   end
 
@@ -37,9 +37,6 @@ defmodule Message.Publisher do
   end
 
   defp build(channel) do
-    AMQP.Exchange.declare(channel, MessageProperty.exchange(), :fanout, durable: true)
-    AMQP.Queue.declare(channel, MessageProperty.queue(), durable: true)
-    AMQP.Queue.bind(channel, MessageProperty.queue(), MessageProperty.exchange())
-    {:ok}
+    Message.GlobalSetup.init(channel)
   end
 end
