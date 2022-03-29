@@ -4,7 +4,6 @@ defmodule Message.GlobalSetup do
   @moduledoc """
   Responsável por inicializar a infraestrutura de Exchanges e Filas
   """
-
   def init(channel) do
     exchanges_setup(channel)
     queue_setups(channel)
@@ -32,6 +31,9 @@ defmodule Message.GlobalSetup do
     AMQP.Queue.declare(channel, Service.MessageProperty.receive_queue(), durable: true)
   end
 
+  @doc """
+  Inicialização de bindgs
+  """
   def bind_setup(channel) do
     AMQP.Queue.bind(
       channel,
