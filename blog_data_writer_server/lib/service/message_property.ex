@@ -28,8 +28,10 @@ defmodule Service.MessageProperty do
   retorna a quantidade de instancias para o consumidor da fila
   """
   def consumer_instance_count() do
-    {v, _} = Service.Property.get_app_prop(:consumer_instance_count)
-    |> Integer.parse
+    {v, _} =
+      Service.Property.get_app_prop(:consumer_instance_count)
+      |> Integer.parse()
+
     v
   end
 
