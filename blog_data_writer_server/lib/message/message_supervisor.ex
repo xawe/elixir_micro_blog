@@ -5,6 +5,7 @@ defmodule Message.MessageSupervisor do
 
   def start_link(_args) do
     sup = DynamicSupervisor.start_link(__MODULE__, :ok, name: __MODULE__)
+    DynamicSupervisor.start_child(__MODULE__, {Message.PublisherApi, :result_publisher})
     build_process(Service.MessageProperty.consumer_instance_count())
     sup
   end
