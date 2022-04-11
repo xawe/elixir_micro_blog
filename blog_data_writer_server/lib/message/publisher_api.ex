@@ -15,7 +15,6 @@ defmodule Message.PublisherApi do
   end
 
   def handle_cast({:send_async, msg}, channel) do
-
     AMQP.Basic.publish(channel, Service.MessageProperty.confirm_exchange(), "", msg )
     {:noreply, channel}
   end
