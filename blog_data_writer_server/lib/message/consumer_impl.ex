@@ -16,6 +16,9 @@ defmodule Message.ConsumerImpl do
 
     Service.MessageFlow.process_data(payload)
     |> ack_message(channel, tag)
+    |> build_reponse_message()
+    |> Message.PublisherApi.send_async()
+
   rescue
     exception ->
       # :ok = Basic.reject(channel, tag, requeue: not redelivered)
@@ -24,11 +27,20 @@ defmodule Message.ConsumerImpl do
       Logger.info(Exception.format(:error, exception, __STACKTRACE__))
   end
 
-  defp ack_message({:ok, _}, channel, tag) do
+  defp ack_message({:ok, data}, channel, tag) do
     :ok = AMQP.Basic.ack(channel, tag)
+    {:ok, data}
   end
 
-  defp ack_message({_, _}, channel, tag) do
+  defp ack_message({_, data}, channel, tag) do
     :ok = AMQP.Basic.reject(channel, tag, requeue: false)
+    {:reject, data}
+  end
+
+  defp build_reponse_message({status, data}) do
+    id = Map.get(data, :id)
+    Logger.info("Preparando notificação de #{status} para mensagem id #{id}")
+    %{type: status, id: id, fingerprint: Map.get(data, :fingerprint)}
+    |> Jason.encode!()
   end
 end

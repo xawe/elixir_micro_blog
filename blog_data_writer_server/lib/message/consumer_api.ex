@@ -15,15 +15,15 @@ defmodule Message.ConsumerApi do
     {:ok, chan}
   end
 
-  def handle_info({:basic_consume_ok, %{consumer_tag: consumer_tag}}, chan) do
+  def handle_info({:basic_consume_ok, %{consumer_tag: _}}, chan) do
     {:noreply, chan}
   end
 
-  def handle_info({:basic_cancel, %{consumer_tag: consumer_tag}}, chan) do
+  def handle_info({:basic_cancel, %{consumer_tag: _}}, chan) do
     {:noreply, chan}
   end
 
-  def handle_info({:basic_cancel_ok, %{consumer_tag: consumer_tag}}, chan) do
+  def handle_info({:basic_cancel_ok, %{consumer_tag: _}}, chan) do
     {:noreply, chan}
   end
 
