@@ -40,4 +40,10 @@ defmodule Service.MessageProperty do
   def persist_queue_error() do
     Service.Property.get_app_prop(:persist_queue_error)
   end
+
+  def amqp_connection() do
+    Application.get_env(:amqp, :connections)[:msg_conn][:url]
+  end
+
+
 end
