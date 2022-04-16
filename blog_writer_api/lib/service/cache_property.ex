@@ -8,7 +8,7 @@ defmodule Service.CacheProperty do
   end
 
   def cache_key() do
-    "input_cache_key"
+    "cachepayload"
   end
 
   def cache_status() do

@@ -12,7 +12,7 @@ config :app,
   persist_queue: "persist_data_queue",
   unlock_msg_queue: "unlock_msg_queue",
   error_queue: "post_data_queue_error",
-  cache_status: :off
+  cache_status: :on
 
 config :amqp,
   connections: [

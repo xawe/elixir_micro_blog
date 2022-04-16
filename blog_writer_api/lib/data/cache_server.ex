@@ -20,6 +20,11 @@ defmodule Data.CacheServer do
     {:reply, result, []}
   end
 
+  def handle_call({:srem, {key, value}}, _from, _) do
+    result = Redix.command(:redix_conn, ["SREM", key, value])
+    {:reply, result, []}
+  end
+
   @spec sadd(any, any) :: any
   def sadd(key, value) do
     GenServer.call(__MODULE__, {:sadd, {key, value}})
@@ -27,5 +32,9 @@ defmodule Data.CacheServer do
 
   def sismember({key, value}) do
     GenServer.call(__MODULE__, {:sismember, {key, value}})
+  end
+
+  def srem({key, value}) do
+    GenServer.call(__MODULE__, {:srem, {key, value}})
   end
 end
