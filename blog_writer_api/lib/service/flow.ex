@@ -5,14 +5,14 @@ defmodule Service.Flow do
   @moduledoc """
   Modulo responsável por orquestrar o envio de mensagem
 
-    1 - criação do hash da mensagem    
+    1 - criação do hash da mensagem
     2 - enviar hash para o cache
     3 - Caso a mensagem não exista no cache, ela seguirá para a exchange para propagação da informação
 
   """
 
   @doc """
-    função responsável por determinar o fluxo da mensagem recebida         
+    função responsável por determinar o fluxo da mensagem recebida
   """
   def handle_create_request({:ok, payload}) do
     hash = Security.Hash.get_hash_mur(payload)
@@ -40,7 +40,7 @@ defmodule Service.Flow do
   end
 
   defp send_data({status, hash, _}) do
-    IO.puts("This not sent -- status #{status} --- hash -  #{hash}")
+    IO.puts("Not sent -- status #{status} --- hash -  #{hash}")
     :error
   end
 
@@ -52,7 +52,7 @@ defmodule Service.Flow do
     Data.Cache.set(CacheProperty.cache_key(), hash)
   end
 
-  defp create_cache({:off, _}) do
+  defp create_cache({:off, hash}) do
     :ok
   end
 end
