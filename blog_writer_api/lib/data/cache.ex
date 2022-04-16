@@ -1,5 +1,4 @@
 defmodule Data.Cache do
-
   @doc """
   Adiciona um item na chave informada
     key - nome da chave
@@ -28,7 +27,6 @@ defmodule Data.Cache do
   def remove_value(key, value) do
     Data.CacheServer.srem({key, value})
     |> exists()
-
   end
 
   defp exists({_, 1}), do: :ok

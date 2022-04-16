@@ -17,13 +17,17 @@ defmodule Message.GlobalSetup do
   def exchanges_setup(channel) do
     Logger.info("------------")
     Logger.info("Inicializando Exchanges")
+
     AMQP.Exchange.declare(channel, Service.MessageProperty.receive_exchange(), :fanout,
       durable: true
     )
+
     Logger.info("#{Service.MessageProperty.receive_exchange()} - OK")
+
     AMQP.Exchange.declare(channel, Service.MessageProperty.confirm_exchange(), :fanout,
       durable: true
     )
+
     Logger.info("#{Service.MessageProperty.confirm_exchange()} - OK")
   end
 
@@ -45,18 +49,25 @@ defmodule Message.GlobalSetup do
   def bind_setup(channel) do
     Logger.info("------------")
     Logger.info("Inicializando Binds")
+
     AMQP.Queue.bind(
       channel,
       Service.MessageProperty.receive_queue(),
       Service.MessageProperty.receive_exchange()
     )
-    Logger.info("#{Service.MessageProperty.receive_queue()}  X #{Service.MessageProperty.receive_exchange()} - OK")
+
+    Logger.info(
+      "#{Service.MessageProperty.receive_queue()}  X #{Service.MessageProperty.receive_exchange()} - OK"
+    )
 
     AMQP.Queue.bind(
       channel,
       Service.MessageProperty.persist_queue(),
       Service.MessageProperty.confirm_exchange()
     )
-    Logger.info("#{Service.MessageProperty.persist_queue()}  X #{Service.MessageProperty.confirm_exchange()} - OK")
+
+    Logger.info(
+      "#{Service.MessageProperty.persist_queue()}  X #{Service.MessageProperty.confirm_exchange()} - OK"
+    )
   end
 end

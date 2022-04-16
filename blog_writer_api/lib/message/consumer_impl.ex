@@ -3,17 +3,16 @@ defmodule Message.ConsumerImpl do
 
   @spec consume(any, any, any, any) :: any
   def consume(channel, tag, _redelivered, payload) do
-
     Logger.info("Removing Hash from cache >> #{payload}")
-    fingerprint = payload
+
+    fingerprint =
+      payload
       |> Jason.decode()
       |> get_fingerprint()
 
     Data.Cache.remove_value(Service.CacheProperty.cache_key(), fingerprint)
-      |> ack_message(fingerprint, channel, tag)
-
+    |> ack_message(fingerprint, channel, tag)
   end
-
 
   defp ack_message(:ok, data, channel, tag) do
     Logger.info("Success removing message #{data}")
@@ -30,5 +29,4 @@ defmodule Message.ConsumerImpl do
   defp get_fingerprint({_status, message}) do
     Map.get(message, "fingerprint")
   end
-
 end
