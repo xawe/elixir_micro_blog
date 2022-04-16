@@ -3,8 +3,6 @@ defmodule Message.PublisherApi do
   use AMQP
   require Logger
 
-
-
   def start_link(_) do
     GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
   end
@@ -15,7 +13,7 @@ defmodule Message.PublisherApi do
   end
 
   def handle_cast({:send_async, msg}, channel) do
-    AMQP.Basic.publish(channel, Service.MessageProperty.confirm_exchange(), "", msg )
+    AMQP.Basic.publish(channel, Service.MessageProperty.confirm_exchange(), "", msg)
     {:noreply, channel}
   end
 
@@ -27,5 +25,4 @@ defmodule Message.PublisherApi do
     Logger.info("Iniciando channel com message broker")
     AMQP.Application.get_channel(:msg_channel)
   end
-
 end
