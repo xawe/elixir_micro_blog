@@ -32,7 +32,7 @@ na fila de retorno o se as informações foram armazenadas com sucesso ou não
 
     > MIX_ENV=dev
 
-    > MIX_ENV=prod
+    > MIX_ENV=prod    
 
     > docker image build -t xawe/blog-writer-data .
 
@@ -40,6 +40,10 @@ na fila de retorno o se as informações foram armazenadas com sucesso ou não
       
     > docker container run  --network micro-space-network --network-alias blog-writer-api --name blog-writer-data xawe/blog-writer-data
 
+# Sobre banco de dados de produção
+
+  Caso suba a aplicação pela primeira vez usando o profile prod, executar o `MIX_ENV=prod mix.ecto create` e `MIX_ENV=prod mix ecto.migrate` para criar o banco de dados de produção e executar as migrations
+  
 
 ## Testes de depuração
 
