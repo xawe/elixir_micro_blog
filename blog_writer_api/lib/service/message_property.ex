@@ -44,6 +44,4 @@ defmodule Service.MessageProperty do
   def amqp_connection() do
     Application.get_env(:amqp, :connections)[:msg_conn][:url]
   end
-
-
 end

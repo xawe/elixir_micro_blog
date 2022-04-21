@@ -13,7 +13,7 @@ defmodule Service.MessageFlow do
     {status, data}
   end
 
-  defp build_message_map({status, message}) do
+  defp build_message_map({_status, message}) do
     message_content = Map.get(message, "message")
 
     %{

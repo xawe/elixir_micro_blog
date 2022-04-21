@@ -11,7 +11,7 @@ defmodule Message.ConsumerApi do
     {:ok, conn} = Connection.open(Service.MessageProperty.amqp_connection())
     {:ok, chan} = Channel.open(conn)
     :ok = Basic.qos(chan, prefetch_count: 10)
-    {:ok, _consumer_tag} = Basic.consume(chan, Service.MessageProperty.persist_queue)
+    {:ok, _consumer_tag} = Basic.consume(chan, Service.MessageProperty.persist_queue())
     {:ok, chan}
   end
 
@@ -31,5 +31,4 @@ defmodule Message.ConsumerApi do
     Message.ConsumerImpl.consume(chan, tag, redelivered, payload)
     {:noreply, chan}
   end
-
 end

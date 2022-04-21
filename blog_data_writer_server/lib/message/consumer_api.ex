@@ -32,10 +32,6 @@ defmodule Message.ConsumerApi do
     {:noreply, chan}
   end
 
-  def count_children() do
-    DynamicSupervisor.count_children()
-  end
-
   ## não utilizado. falta implementar a postagem da mensagem para a fila de sincronização
   # defp setup_queue(chan) do
   #   IO.inspect(Service.MessageProperty.error_queue())

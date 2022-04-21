@@ -4,9 +4,9 @@ config :app,
   # redis_host: "redis://172.24.0.2:6379"
   redis_host: "localhost",
   redis_port: 6379,
-  #Exchange responsável pelo recebimento do post de usuário
+  # Exchange responsável pelo recebimento do post de usuário
   receive_exchange: "receive_exchange",
-  #Exchaneg responsável por informar a confirmação da mensagem gravada em banco
+  # Exchaneg responsável por informar a confirmação da mensagem gravada em banco
   confirm_exchange: "confirm_exchange",
   receive_queue: "receive_data_queue",
   persist_queue: "persist_data_queue",
