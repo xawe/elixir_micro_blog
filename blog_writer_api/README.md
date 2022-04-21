@@ -3,8 +3,6 @@
 
 ## Definição
 
-Implementação de api para escrita only
-
 Api responsável por receber a requisição de criação de post de forma indepotente. Uma vez que a mensagem seja identificada como nova, o payload é enviado para um tópico para ser tratado pelo server responsável pela persistência.
 A Api também ouvirá um tópico de retorno para liberar a mensagem o payload do cache assim que a mensagem tenha sido armazenada com sucesso pela api Server
 
